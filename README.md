@@ -139,6 +139,7 @@ conda create -n open-clip python=3.8
 conda activate open-clip
 pip install open_clip_torch
 python -m pip install -r requirements-training.txt
+pip install img2dataset
 ```
 
 ### Install
