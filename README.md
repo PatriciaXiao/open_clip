@@ -132,6 +132,14 @@ The indices of images in this subset are in [OpenAI's CLIP repository](https://g
 
 ## Training CLIP
 
+### My Environment
+
+```shell
+conda create -n open-clip python=3.8
+conda activate open-clip
+pip install open_clip_torch
+```
+
 ### Install
 
 We advise you first create a virtual environment with:
