@@ -138,6 +138,7 @@ The indices of images in this subset are in [OpenAI's CLIP repository](https://g
 conda create -n open-clip python=3.8
 conda activate open-clip
 pip install open_clip_torch
+python -m pip install -r requirements-training.txt
 ```
 
 ### Install
