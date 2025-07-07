@@ -19,7 +19,7 @@ tokenizer = get_tokenizer('hf-hub:microsoft/BiomedCLIP-PubMedBERT_256-vit_base_p
 # Parameters
 #webdataset_path = "/projects/chimeranb/patxiao/mydata.tar"  # <- CHANGE THIS
 webdataset_path = "../mydataset/sample_data/my_sample.tar"
-sample_fraction = 0.2
+sample_fraction = 1.0#0.2
 
 # Load and decode dataset
 """
