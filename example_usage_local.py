@@ -10,7 +10,7 @@ model, _, preprocess = create_model_and_transforms(
 model.eval()
 
 # Prepare example input
-image = preprocess(Image.open("mydataset/images/0003.png")).unsqueeze(0)
+image = preprocess(Image.open("mydataset/sample_data/images/0003.png")).unsqueeze(0)
 text = tokenizer(["a diagram", "a dog", "a cat"])
 
 with torch.no_grad(), torch.autocast("cuda:1"):
