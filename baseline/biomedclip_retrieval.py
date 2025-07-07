@@ -12,11 +12,9 @@ from PIL import Image
 # Set up device
 device = torch.device("cuda:1" if torch.cuda.is_available() else "cpu")
 
-# Load OpenCLIP model (e.g., ViT-B/32 pretrained)
-model_name = "ViT-B-32"
-pretrain = "openai"
-model, _, preprocess = create_model_from_pretrained(model_name, pretrain, device=device)
-tokenizer = get_tokenizer(pretrain)
+# Load the model and config files from the Hugging Face Hub
+model, preprocess = create_model_from_pretrained('hf-hub:microsoft/BiomedCLIP-PubMedBERT_256-vit_base_patch16_224')
+tokenizer = get_tokenizer('hf-hub:microsoft/BiomedCLIP-PubMedBERT_256-vit_base_patch16_224')
 
 # Parameters
 webdataset_path = "/projects/chimeranb/patxiao/mydata.tar"  # <- CHANGE THIS
