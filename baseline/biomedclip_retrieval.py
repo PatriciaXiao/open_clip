@@ -10,14 +10,15 @@ from open_clip import create_model_from_pretrained, get_tokenizer
 from PIL import Image
 
 # Set up device
-device = torch.device("cuda:1" if torch.cuda.is_available() else "cpu")
+device = torch.device("cuda:3" if torch.cuda.is_available() else "cpu")
 
 # Load the model and config files from the Hugging Face Hub
 model, preprocess = create_model_from_pretrained('hf-hub:microsoft/BiomedCLIP-PubMedBERT_256-vit_base_patch16_224')
 tokenizer = get_tokenizer('hf-hub:microsoft/BiomedCLIP-PubMedBERT_256-vit_base_patch16_224')
 
 # Parameters
-webdataset_path = "/projects/chimeranb/patxiao/mydata.tar"  # <- CHANGE THIS
+#webdataset_path = "/projects/chimeranb/patxiao/mydata.tar"  # <- CHANGE THIS
+webdataset_path = "../mydataset/sample_data/my_sample.tar"
 sample_fraction = 0.2
 
 # Load and decode dataset
