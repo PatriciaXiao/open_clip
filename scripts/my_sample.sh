@@ -10,5 +10,6 @@ CUDA_VISIBLE_DEVICES=1 python -m open_clip_train.main \
   --workers 0 \
   --model ViT-B-32 \
   --pretrained openai \
+  --train-num-samples 2 \
   --logs ./logs_test \
   --report-to none
