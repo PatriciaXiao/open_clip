@@ -61,7 +61,8 @@ def remap_dino_teacher_to_openclip(dino_ckpt_path, output_ckpt_path):
         new_state[new_key] = val
 
     # Save in OpenCLIP format
-    torch.save({"state_dict": new_state}, output_ckpt_path)
+    #torch.save({"state_dict": new_state}, output_ckpt_path)
+    torch.save({"model": new_state}, output_ckpt_path)
     print(f"✅ Saved converted model to: {output_ckpt_path}")
 
 
