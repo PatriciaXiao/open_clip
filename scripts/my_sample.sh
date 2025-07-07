@@ -11,5 +11,4 @@ CUDA_VISIBLE_DEVICES=1 python -m open_clip_train.main \
   --model ViT-B-32 \
   --pretrained openai \
   --logs ./logs_test \
-  --output-dir ./checkpoints_test \
   --report-to none
