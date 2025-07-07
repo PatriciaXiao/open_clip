@@ -5,6 +5,7 @@ import json
 def create_webdataset_tar(image_dir, metadata_path, output_path):
     with open(metadata_path, 'r') as f:
         lines = f.readlines()
+    image_dir = os.path.abspath(image_dir) # use absolute directory
     with tarfile.open(output_path, "w") as tar:
         for idx, line in enumerate(lines):
             item = json.loads(line)
@@ -22,4 +23,4 @@ def create_webdataset_tar(image_dir, metadata_path, output_path):
             tar.addfile(tarinfo=info, fileobj=io.BytesIO(caption_bytes))
 
 
-create_webdataset_tar("./sample_data/images", "./sample_data/metadata.jsonl")
+create_webdataset_tar("./sample_data/images", "./sample_data/metadata.jsonl", "./sample_data/my_sample.tar")
