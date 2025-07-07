@@ -22,6 +22,7 @@ print("\tFinished loading")
 # Parameters
 webdataset_path = "/projects/chimeranb/patxiao/mydata.tar"  # <- CHANGE THIS
 sample_fraction = 0.2
+max_sample_size = 5000
 #webdataset_path = "../mydataset/sample_data/my_sample.tar"
 #sample_fraction = 1.0
 
@@ -40,6 +41,7 @@ dataset = (
     .decode("pil")  # Decode image bytes to PIL images
     .to_tuple("png", "txt")  # Unpack image/text pair
     .map(lambda sample: (sample[0].convert("RGB"), sample[1]))  # Convert image to RGB safely
+    .slice(max_sample_size)  # Select up to 5000 samples
 )
 print("\tFinished loading")
 
