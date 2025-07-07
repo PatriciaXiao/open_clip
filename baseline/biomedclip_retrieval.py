@@ -13,8 +13,10 @@ from PIL import Image
 device = torch.device("cuda:3" if torch.cuda.is_available() else "cpu")
 
 # Load the model and config files from the Hugging Face Hub
+print("Loading model and tokenizer")
 model, preprocess = create_model_from_pretrained('hf-hub:microsoft/BiomedCLIP-PubMedBERT_256-vit_base_patch16_224')
 tokenizer = get_tokenizer('hf-hub:microsoft/BiomedCLIP-PubMedBERT_256-vit_base_patch16_224')
+print("\tFinished loading")
 
 # Parameters
 #webdataset_path = "/projects/chimeranb/patxiao/mydata.tar"  # <- CHANGE THIS
@@ -31,12 +33,14 @@ dataset = (
     .map_tuple(lambda img, txt: (img.convert("RGB"), txt))
 )
 """
+print(f"Loading data from {webdataset_path}")
 dataset = (
     wds.WebDataset(webdataset_path)
     .decode("pil")  # Decode image bytes to PIL images
     .to_tuple("png", "txt")  # Unpack image/text pair
     .map(lambda sample: (sample[0].convert("RGB"), sample[1]))  # Convert image to RGB safely
 )
+print("\tFinished loading")
 
 # Buffer entire dataset and sample
 buffered_data = list(iter(dataset))
@@ -48,6 +52,7 @@ image_embeddings = []
 text_embeddings = []
 model.eval()
 
+print("Run samples")
 with torch.no_grad():
     for img, txt in tqdm(sampled_data, desc="Encoding"):
         image_tensor = preprocess(img).unsqueeze(0).to(device)
