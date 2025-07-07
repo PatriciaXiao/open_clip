@@ -60,8 +60,30 @@ def identify_vit_arch(checkpoint_path):
 
     print(f"\n✅ Best matching OpenCLIP model: {model_name}")
 
+
 # Example usage
 #identify_vit_arch("/projects/chimera/nobackup/wliu25/ckpts/pretrain/ckpt_lshort_bs128/eval/training_99999/teacher_checkpoint.pth")
 identify_vit_arch("./openclip_vit_l14_from_dino.pth")
 
 
+# check
+
+ckpt = torch.load("/projects/chimera/nobackup/wliu25/ckpts/pretrain/ckpt_lshort_bs128/eval/training_99999/teacher_checkpoint.pth", map_location="cpu")
+state_dict = ckpt.get("teacher", ckpt)
+
+pos_embed = state_dict.get("backbone.pos_embed", None)
+if pos_embed is not None:
+    print("Positional Embedding Shape:", pos_embed.shape)
+    n_patches = pos_embed.shape[1] - 1  # subtract cls token
+    print("Detected number of patches:", n_patches)
+
+    # Assume square images
+    side = int(n_patches ** 0.5)
+    patch_count = side
+    print(f"Estimated patch size: {224 // patch_count}")
+else:
+    print("No positional embedding found.")
+
+
+
+    
