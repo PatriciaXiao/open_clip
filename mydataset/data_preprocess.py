@@ -1,6 +1,5 @@
-import os
-import tarfile
-import json
+import tarfile, json, io
+from PIL import Image
 
 def create_webdataset_tar(image_dir, metadata_path, output_path):
     with open(metadata_path, 'r') as f:
