@@ -23,4 +23,4 @@ def inspect_tar_contents(tar_path):
         print()
 
 # Example usage
-inspect_tar_contents("./sample_data/my_sample.tar")
+inspect_tar_contents("/homes/gws/patxiao/open_clip/mydataset/sample_data/my_sample.tar")
