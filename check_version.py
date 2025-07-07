@@ -98,11 +98,11 @@ def inspect_vit_config(ckpt_path, image_res=224):
     num_layers = max(layer_indices) + 1 if layer_indices else None
 
     # Infer width from first norm layer
-    norm_weight = state_dict.get("backbone.blocks.0.norm1.weight", None)
+    norm_weight = state_dict.get("backbone.blocks.0.0.norm1.weight", None)
     width = norm_weight.shape[0] if norm_weight is not None else None
 
     # Infer head width from qkv weight
-    qkv_weight = state_dict.get("backbone.blocks.0.attn.qkv.weight", None)
+    qkv_weight = state_dict.get("backbone.blocks.0.1.attn.qkv.weight", None)
     if qkv_weight is not None and width is not None:
         qkv_dim = qkv_weight.shape[0]
         head_width = qkv_dim // (3 * width)
