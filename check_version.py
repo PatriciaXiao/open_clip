@@ -68,21 +68,57 @@ identify_vit_arch("./openclip_vit_l14_from_dino.pth")
 
 # check
 
-ckpt = torch.load("/projects/chimera/nobackup/wliu25/ckpts/pretrain/ckpt_lshort_bs128/eval/training_99999/teacher_checkpoint.pth", map_location="cpu")
-state_dict = ckpt.get("teacher", ckpt)
+import torch
+import math
 
-pos_embed = state_dict.get("backbone.pos_embed", None)
-if pos_embed is not None:
-    print("Positional Embedding Shape:", pos_embed.shape)
-    n_patches = pos_embed.shape[1] - 1  # subtract cls token
-    print("Detected number of patches:", n_patches)
+def inspect_vit_config(ckpt_path, image_res=224):
+    print(f"📦 Loading checkpoint from: {ckpt_path}")
+    ckpt = torch.load(ckpt_path, map_location="cpu")
+    state_dict = ckpt.get("teacher", ckpt)
 
-    # Assume square images
-    side = int(n_patches ** 0.5)
-    patch_count = side
-    print(f"Estimated patch size: {224 // patch_count}")
-else:
-    print("No positional embedding found.")
+    # Infer patch size from positional embeddings
+    pos_embed = state_dict.get("backbone.pos_embed", None)
+    if pos_embed is None:
+        print("❌ No 'backbone.pos_embed' found in checkpoint.")
+        return
+
+    pos_embed = pos_embed.squeeze(0)  # shape: [1, N+1, C] -> [N+1, C]
+    num_patches = pos_embed.shape[0] - 1  # subtract CLS token
+    patches_per_dim = int(math.sqrt(num_patches))
+    patch_size = image_res // patches_per_dim
+
+    # Infer number of layers
+    block_keys = [k for k in state_dict.keys() if "backbone.blocks" in k]
+    layer_indices = set()
+    for key in block_keys:
+        parts = key.split(".")
+        if "blocks" in parts:
+            block_idx = parts[parts.index("blocks") + 1]
+            layer_indices.add(int(block_idx))
+    num_layers = max(layer_indices) + 1 if layer_indices else None
+
+    # Infer width from first norm layer
+    norm_weight = state_dict.get("backbone.blocks.0.norm1.weight", None)
+    width = norm_weight.shape[0] if norm_weight is not None else None
+
+    # Infer head width from qkv weight
+    qkv_weight = state_dict.get("backbone.blocks.0.attn.qkv.weight", None)
+    if qkv_weight is not None and width is not None:
+        qkv_dim = qkv_weight.shape[0]
+        head_width = qkv_dim // (3 * width)
+    else:
+        head_width = None
+
+    print("\n🧠 Inferred vision_cfg:")
+    print(f"  image_size  : {image_res}")
+    print(f"  patch_size  : {patch_size}")
+    print(f"  layers      : {num_layers}")
+    print(f"  width       : {width}")
+    print(f"  head_width  : {head_width}")
+
+# Example usage
+inspect_vit_config("/projects/chimera/nobackup/wliu25/ckpts/pretrain/ckpt_lshort_bs128/eval/training_99999/teacher_checkpoint.pth")
+
 
 
 
