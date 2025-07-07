@@ -5,7 +5,7 @@ def identify_vit_arch(checkpoint_path):
     
     ckpt = torch.load(checkpoint_path, map_location="cpu")
     #state_dict = ckpt.get("model", ckpt)["teacher"]# needed for orig ver
-     state_dict = ckpt.get("model", ckpt)
+    state_dict = ckpt.get("model", ckpt)
 
     #print(state_dict.keys())
     print("Checkpoint keys:")
