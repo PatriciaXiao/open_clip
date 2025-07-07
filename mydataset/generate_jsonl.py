@@ -37,9 +37,9 @@ def generate_jsonl_from_pkl(pkl_path, png_dir, output_jsonl_path):
 
 # Example usage:
 """
-python generate_jsonl_from_pkl.py --pkl sample.pkl --png_dir ./images --output mydata.jsonl
+python generate_jsonl.py --pkl sample.pkl --png_dir ./images --output mydata.jsonl
 
-python generate_jsonl_from_pkl.py --pkl /homes/gws/patxiao/Dental/Junwei_preprocessed/content.pkl --png_dir /projects/chimeranb/PanosDeidentified --output mydata.jsonl
+python generate_jsonl.py --pkl /homes/gws/patxiao/Dental/Junwei_preprocessed/content.pkl --png_dir /projects/chimeranb/PanosDeidentified --output mydata.jsonl
 
 """
 if __name__ == "__main__":
