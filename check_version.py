@@ -60,4 +60,7 @@ def identify_vit_arch(checkpoint_path):
     print(f"\n✅ Best matching OpenCLIP model: {model_name}")
 
 # Example usage
-identify_vit_arch("/projects/chimera/nobackup/wliu25/ckpts/pretrain/ckpt_lshort_bs128/eval/training_99999/teacher_checkpoint.pth")
+#identify_vit_arch("/projects/chimera/nobackup/wliu25/ckpts/pretrain/ckpt_lshort_bs128/eval/training_99999/teacher_checkpoint.pth")
+identify_vit_arch("./openclip_vit_l14_from_dino.pth")
+
+
