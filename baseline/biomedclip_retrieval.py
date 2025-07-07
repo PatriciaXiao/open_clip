@@ -21,11 +21,19 @@ webdataset_path = "/projects/chimeranb/patxiao/mydata.tar"  # <- CHANGE THIS
 sample_fraction = 0.2
 
 # Load and decode dataset
+"""
 dataset = (
     wds.WebDataset(webdataset_path)
     .decode("pil")
     .to_tuple("png", "txt")
     .map_tuple(lambda img, txt: (img.convert("RGB"), txt))
+)
+"""
+dataset = (
+    wds.WebDataset(webdataset_path)
+    .decode("pil")  # Decode image bytes to PIL images
+    .to_tuple("png", "txt")  # Unpack image/text pair
+    .map(lambda sample: (sample[0].convert("RGB"), sample[1]))  # Convert image to RGB safely
 )
 
 # Buffer entire dataset and sample
