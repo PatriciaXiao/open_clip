@@ -1,6 +1,6 @@
 # run on cuda:1, if use 0 and 2 then CUDA_VISIBLE_DEVICES=0,2 
 CUDA_VISIBLE_DEVICES=1 python -m open_clip_train.main \
-  --train-data "/homes/gws/patxiao/open_clip/mydataset/my_sample.tar" \
+  --train-data "../mydataset/sample_data/my_sample.tar" \
   --dataset-type webdataset \
   --warmup 0 \
   --batch-size 2 \
