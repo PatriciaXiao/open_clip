@@ -28,4 +28,8 @@ def create_webdataset_tar(image_dir, metadata_path, output_path):
 
 
 
-create_webdataset_tar("./sample_data/images", "./sample_data/metadata.jsonl", "./sample_data/my_sample.tar")
+#create_webdataset_tar("./sample_data/images", "./sample_data/metadata.jsonl", "./sample_data/my_sample.tar")
+
+
+
+create_webdataset_tar("/projects/chimeranb/PanosDeidentified", "./mydata.jsonl", "/projects/chimeranb/patxiao/mydata.tar")
