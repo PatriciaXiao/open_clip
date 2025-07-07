@@ -1,27 +1,25 @@
 import webdataset as wds
 from webdataset.handlers import reraise_exception
 from webdataset.tariterators import url_opener, tar_file_expander
-import tarfile
 import io
+from PIL import Image
 
 def inspect_tar_contents(tar_path):
     print(f"🔍 Inspecting tar: {tar_path}")
     
-    # Step 1: Open the stream
-    streams = url_opener(tar_path, handler=reraise_exception)
-    
-    # Step 2: Expand the tar
+    # FIX: pass list of paths, not just string
+    streams = url_opener([tar_path], handler=reraise_exception)
     files = tar_file_expander(streams, handler=reraise_exception)
-    
+
     for sample in files:
-        # Each `sample` is a dict: {'__key__': '000001', 'txt': b'caption', 'png': b'\x89PNG...'}
         print("----- Sample -----")
         print(f"__key__: {sample.get('__key__')}")
         for k, v in sample.items():
             if k == '__key__':
                 continue
             print(f"  {k}: type={type(v)}, size={len(v)} bytes")
-
+            if k.endswith("txt"):
+                print("    Text content:", v.decode("utf-8"))
         print()
 
 # Example usage
