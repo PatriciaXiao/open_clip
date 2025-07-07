@@ -142,7 +142,7 @@ gpu1sync.sh
 *.pdf
 **/._*
 **/*DS_*
-**.jsonl
+#**.jsonl
 src/sbatch
 src/misc
 .vscode
