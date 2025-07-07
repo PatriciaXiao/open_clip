@@ -1,28 +1,34 @@
 import webdataset as wds
-from webdataset.handlers import reraise_exception
-from webdataset.tariterators import url_opener, tar_file_expander
 import io
-from PIL import Image
 
-def inspect_tar_contents(tar_path):
-    print(f"🔍 Inspecting tar: {tar_path}")
+def inspect_webdataset_tar(tar_path):
+    print(f"📦 Inspecting WebDataset TAR: {tar_path}")
     
-    # FIX: pass list of paths, not just string
-    streams = url_opener([tar_path], handler=reraise_exception)
-    print(streams)
-    exit(0)
-    files = tar_file_expander(streams, handler=reraise_exception)
+    dataset = wds.WebDataset(tar_path).decode().to_tuple("png", "txt")
 
-    for sample in files:
-        print("----- Sample -----")
-        print(f"__key__: {sample.get('__key__')}")
-        for k, v in sample.items():
-            if k == '__key__':
+    for idx, (image, caption) in enumerate(dataset):
+        print(f"\n----- Sample {idx} -----")
+
+        # Process text (caption)
+        if isinstance(caption, bytes):
+            try:
+                text = caption.decode("utf-8")
+            except UnicodeDecodeError:
+                print("  ⚠️ Could not decode caption text.")
                 continue
-            print(f"  {k}: type={type(v)}, size={len(v)} bytes")
-            if k.endswith("txt"):
-                print("    Text content:", v.decode("utf-8"))
-        print()
+        else:
+            text = str(caption)
+
+        lines = text.splitlines()
+
+        if not lines:
+            print("  [empty line]")
+        else:
+            for i, line in enumerate(lines):
+                if line.strip() == "":
+                    print(f"  Line {i+1}: [empty line]")
+                else:
+                    print(f"  Line {i+1}: {line}")
 
 # Example usage
-inspect_tar_contents("/homes/gws/patxiao/open_clip/mydataset/sample_data/my_sample.tar")
+inspect_webdataset_tar("/homes/gws/patxiao/open_clip/mydataset/sample_data/my_sample.tar")
