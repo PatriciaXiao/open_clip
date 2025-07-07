@@ -9,6 +9,8 @@ def inspect_tar_contents(tar_path):
     
     # FIX: pass list of paths, not just string
     streams = url_opener([tar_path], handler=reraise_exception)
+    print(streams)
+    exit(0)
     files = tar_file_expander(streams, handler=reraise_exception)
 
     for sample in files:
