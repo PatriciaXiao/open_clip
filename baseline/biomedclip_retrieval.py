@@ -1,66 +1,76 @@
-# https://huggingface.co/microsoft/BiomedCLIP-PubMedBERT_256-vit_base_patch16_224
-
+import os
+import random
 import torch
-from urllib.request import urlopen
-from PIL import Image
+import webdataset as wds
+import numpy as np
+from tqdm import tqdm
+from torch.nn.functional import cosine_similarity
+
 from open_clip import create_model_from_pretrained, get_tokenizer
+from PIL import Image
 
-# Load the model and config files from the Hugging Face Hub
-model, preprocess = create_model_from_pretrained('hf-hub:microsoft/BiomedCLIP-PubMedBERT_256-vit_base_patch16_224')
-tokenizer = get_tokenizer('hf-hub:microsoft/BiomedCLIP-PubMedBERT_256-vit_base_patch16_224')
+# Set up device
+device = torch.device("cuda:1" if torch.cuda.is_available() else "cpu")
 
+# Load OpenCLIP model (e.g., ViT-B/32 pretrained)
+model_name = "ViT-B-32"
+pretrain = "openai"
+model, _, preprocess = create_model_from_pretrained(model_name, pretrain, device=device)
+tokenizer = get_tokenizer(pretrain)
 
-# Zero-shot image classification
-template = 'this is a photo of '
-labels = [
-    'adenocarcinoma histopathology',
-    'brain MRI',
-    'covid line chart',
-    'squamous cell carcinoma histopathology',
-    'immunohistochemistry histopathology',
-    'bone X-ray',
-    'chest X-ray',
-    'pie chart',
-    'hematoxylin and eosin histopathology'
-]
+# Parameters
+webdataset_path = "/projects/chimeranb/patxiao/mydata.tar"  # <- CHANGE THIS
+sample_fraction = 0.2
 
-dataset_url = 'https://huggingface.co/microsoft/BiomedCLIP-PubMedBERT_256-vit_base_patch16_224/resolve/main/example_data/biomed_image_classification_example_data/'
-test_imgs = [
-    'squamous_cell_carcinoma_histopathology.jpeg',
-    'H_and_E_histopathology.jpg',
-    'bone_X-ray.jpg',
-    'adenocarcinoma_histopathology.jpg',
-    'covid_line_chart.png',
-    'IHC_histopathology.jpg',
-    'chest_X-ray.jpg',
-    'brain_MRI.jpg',
-    'pie_chart.png'
-]
-device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
-model.to(device)
+# Load and decode dataset
+dataset = (
+    wds.WebDataset(webdataset_path)
+    .decode("pil")
+    .to_tuple("png", "txt")
+    .map_tuple(lambda img, txt: (img.convert("RGB"), txt))
+)
+
+# Buffer entire dataset and sample
+buffered_data = list(iter(dataset))
+sample_size = int(len(buffered_data) * sample_fraction)
+sampled_data = random.sample(buffered_data, sample_size)
+
+# Encode all images and texts
+image_embeddings = []
+text_embeddings = []
 model.eval()
 
-context_length = 256
-
-images = torch.stack([preprocess(Image.open(urlopen(dataset_url + img))) for img in test_imgs]).to(device)
-texts = tokenizer([template + l for l in labels], context_length=context_length).to(device)
 with torch.no_grad():
-    image_features, text_features, logit_scale = model(images, texts)
+    for img, txt in tqdm(sampled_data, desc="Encoding"):
+        image_tensor = preprocess(img).unsqueeze(0).to(device)
+        image_emb = model.encode_image(image_tensor)
+        image_emb = image_emb / image_emb.norm(dim=-1, keepdim=True)
+        image_embeddings.append(image_emb.cpu())
 
-    logits = (logit_scale * image_features @ text_features.t()).detach().softmax(dim=-1)
-    sorted_indices = torch.argsort(logits, dim=-1, descending=True)
+        text_tokens = tokenizer([txt]).to(device)
+        text_emb = model.encode_text(text_tokens)
+        text_emb = text_emb / text_emb.norm(dim=-1, keepdim=True)
+        text_embeddings.append(text_emb.cpu())
 
-    logits = logits.cpu().numpy()
-    sorted_indices = sorted_indices.cpu().numpy()
+# Stack embeddings
+image_embeddings = torch.cat(image_embeddings, dim=0)
+text_embeddings = torch.cat(text_embeddings, dim=0)
 
-top_k = -1
+# Compute cosine similarity
+similarity = cosine_similarity(text_embeddings.unsqueeze(1), image_embeddings.unsqueeze(0), dim=-1)
 
-for i, img in enumerate(test_imgs):
-    pred = labels[sorted_indices[i][0]]
+# Compute ranks
+ranks = []
+for i in range(len(sampled_data)):
+    sim_scores = similarity[i]
+    rank = torch.argsort(sim_scores, descending=True).tolist().index(i) + 1
+    ranks.append(rank)
 
-    top_k = len(labels) if top_k == -1 else top_k
-    print(img.split('/')[-1] + ':')
-    for j in range(top_k):
-        jth_index = sorted_indices[i][j]
-        print(f'{labels[jth_index]}: {logits[i][jth_index]}')
-    print('\n')
+# Evaluate
+ranks = np.array(ranks)
+print("\n\U0001F4CA Retrieval Evaluation Results")
+print(f"Recall@1:  {np.mean(ranks <= 1):.4f}")
+print(f"Recall@5:  {np.mean(ranks <= 5):.4f}")
+print(f"Recall@10: {np.mean(ranks <= 10):.4f}")
+print(f"Mean Rank: {np.mean(ranks):.2f}")
+print(f"Median Rank: {np.median(ranks):.2f}")
