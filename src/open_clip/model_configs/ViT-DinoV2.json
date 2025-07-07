@@ -2,7 +2,7 @@
     "embed_dim": 1024,
     "vision_cfg": {
         "image_size": 224,
-        "layers": 4,
+        "layers": 4, // ?
         "width": 1024,
         "head_width": 1,
         "patch_size": 16

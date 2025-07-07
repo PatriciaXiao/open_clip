@@ -65,6 +65,9 @@ def identify_vit_arch(checkpoint_path):
 #identify_vit_arch("/projects/chimera/nobackup/wliu25/ckpts/pretrain/ckpt_lshort_bs128/eval/training_99999/teacher_checkpoint.pth")
 identify_vit_arch("./openclip_vit_l14_from_dino.pth")
 
+# suppose to be:
+# src/logs_test/2025_07_06-23_16_02-model_ViT-B-32-lr_1e-05-b_2-j_0-p_amp/checkpoints/epoch_1.pt
+
 
 # check
 
@@ -122,4 +125,4 @@ inspect_vit_config("/projects/chimera/nobackup/wliu25/ckpts/pretrain/ckpt_lshort
 
 
 
-    
+

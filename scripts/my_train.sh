@@ -9,7 +9,7 @@ CUDA_VISIBLE_DEVICES=1 python -m open_clip_train.main \
   --wd 0.0 \
   --epochs 1 \
   --workers 0 \
-  --model ViT-B-16 \
+  --model ViT-DinoV2 \
   --pretrained openai \
   --train-num-samples 2 \
   --logs ./logs_debug \
