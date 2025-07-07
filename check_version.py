@@ -6,8 +6,8 @@ def identify_vit_arch(checkpoint_path):
     ckpt = torch.load(checkpoint_path, map_location="cpu")
     state_dict = ckpt.get("model", ckpt)
 
-    print(state_dict)
-    
+    #print(state_dict.keys())
+
     # Determine hidden dim
     class_embed = state_dict.get("visual.class_embedding", None)
     if class_embed is None:
