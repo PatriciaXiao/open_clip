@@ -25,21 +25,15 @@ model = model.to(device)
 print("\tFinished loading")
 
 # Parameters
-webdataset_path = "/projects/chimeranb/patxiao/mydata.tar"  # <- CHANGE THIS
-sample_fraction = 0.2
+#webdataset_path = "/projects/chimeranb/patxiao/mydata.tar"  # <- CHANGE THIS
+#sample_fraction = 0.2
+#max_sample_size = 5000
+
+webdataset_path = "../mydataset/sample_data/my_sample.tar"
+sample_fraction = 1.0
 max_sample_size = 5000
-#webdataset_path = "../mydataset/sample_data/my_sample.tar"
-#sample_fraction = 1.0
 
 # Load and decode dataset
-"""
-dataset = (
-    wds.WebDataset(webdataset_path)
-    .decode("pil")
-    .to_tuple("png", "txt")
-    .map_tuple(lambda img, txt: (img.convert("RGB"), txt))
-)
-"""
 print(f"Loading data from {webdataset_path}")
 dataset = (
     wds.WebDataset(webdataset_path)
