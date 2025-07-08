@@ -6,7 +6,7 @@ import numpy as np
 from tqdm import tqdm
 from torch.nn.functional import cosine_similarity
 
-from open_clip import create_model_from_pretrained, get_tokenizer, create_model
+from open_clip import create_model_and_transforms, get_tokenizer
 from PIL import Image
 
 # Set up device
