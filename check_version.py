@@ -16,7 +16,7 @@ def identify_vit_arch(checkpoint_path):
     class_embed = state_dict.get("visual.class_embedding", None)
     if class_embed is None:
         print("❌ Could not find 'visual.class_embedding'. Not a ViT-style model.")
-        return
+        #return
 
     embed_dim = class_embed.shape[-1]
     
