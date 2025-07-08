@@ -5,7 +5,8 @@ def identify_vit_arch(checkpoint_path):
     
     ckpt = torch.load(checkpoint_path, map_location="cpu")
     #state_dict = ckpt.get("model", ckpt)["teacher"]# needed for orig ver
-    state_dict = ckpt.get("model", ckpt)
+    #state_dict = ckpt.get("model", ckpt)
+    state_dict = ckpt.get("state_dict", ckpt)
 
     #print(state_dict.keys())
     print("Checkpoint keys:")
@@ -16,7 +17,7 @@ def identify_vit_arch(checkpoint_path):
     class_embed = state_dict.get("visual.class_embedding", None)
     if class_embed is None:
         print("❌ Could not find 'visual.class_embedding'. Not a ViT-style model.")
-        #return
+        return
 
     embed_dim = class_embed.shape[-1]
     
@@ -63,10 +64,10 @@ def identify_vit_arch(checkpoint_path):
 
 # Example usage
 #identify_vit_arch("/projects/chimera/nobackup/wliu25/ckpts/pretrain/ckpt_lshort_bs128/eval/training_99999/teacher_checkpoint.pth")
-identify_vit_arch("./openclip_vit_l14_from_dino.pth")
+#identify_vit_arch("./openclip_vit_l14_from_dino.pth")
 
 # suppose to be:
-print("******************** target ********************")
+#print("******************** target ********************")
 
 identify_vit_arch("src/logs_test/2025_07_06-23_16_02-model_ViT-B-32-lr_1e-05-b_2-j_0-p_amp/checkpoints/epoch_1.pt")
 
