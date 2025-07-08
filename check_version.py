@@ -66,7 +66,9 @@ def identify_vit_arch(checkpoint_path):
 identify_vit_arch("./openclip_vit_l14_from_dino.pth")
 
 # suppose to be:
-# src/logs_test/2025_07_06-23_16_02-model_ViT-B-32-lr_1e-05-b_2-j_0-p_amp/checkpoints/epoch_1.pt
+print("******************** target ********************")
+
+identify_vit_arch("src/logs_test/2025_07_06-23_16_02-model_ViT-B-32-lr_1e-05-b_2-j_0-p_amp/checkpoints/epoch_1.pt")
 
 
 # check
