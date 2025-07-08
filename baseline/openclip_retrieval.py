@@ -15,7 +15,7 @@ device = torch.device("cuda:3" if torch.cuda.is_available() else "cpu")
 # Load the model and config files from the Hugging Face Hub
 print("Loading model and tokenizer")
 model_name = "ViT-L-16"
-pretrained = "openai"  # or "laion2b_s32b_b82k" if you prefer LAION pretraining
+pretrained = "laion2b_s32b_b82k"
 #model, preprocess = create_model_from_pretrained('hf-hub:microsoft/BiomedCLIP-PubMedBERT_256-vit_base_patch16_224')
 #tokenizer = get_tokenizer('hf-hub:microsoft/BiomedCLIP-PubMedBERT_256-vit_base_patch16_224')
 print("Loading OpenCLIP ViT-L/16 model and tokenizer")
