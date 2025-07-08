@@ -25,13 +25,15 @@ model = model.to(device)
 print("\tFinished loading")
 
 # Parameters
-#webdataset_path = "/projects/chimeranb/patxiao/mydata.tar"  # <- CHANGE THIS
-#sample_fraction = 0.2
-#max_sample_size = 5000
+webdataset_path = "/projects/chimeranb/patxiao/mydata.tar"  # <- CHANGE THIS
+sample_fraction = 0.2
+max_sample_size = 5000
 
+"""
 webdataset_path = "../mydataset/sample_data/my_sample.tar"
 sample_fraction = 1.0
 max_sample_size = 5000
+"""
 
 # Load and decode dataset
 print(f"Loading data from {webdataset_path}")
