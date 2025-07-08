@@ -18,8 +18,8 @@ print("Loading model and tokenizer")
 #tokenizer = get_tokenizer('hf-hub:microsoft/BiomedCLIP-PubMedBERT_256-vit_base_patch16_224')
 model_name = "ViT-B-32"
 model_path = "../src/logs_test/2025_07_06-23_16_02-model_ViT-B-32-lr_1e-05-b_2-j_0-p_amp/checkpoints/epoch_1.pt"
-tokenizer = get_tokenizer(pretrain)
 model = create_model(model_name, pretrained=None, device=device)  # Don't use pretrained here
+tokenizer = get_tokenizer(model_name)
 # Strict loading
 checkpoint = torch.load(model_path, map_location="cpu")
 model.load_state_dict(checkpoint, strict=True)
