@@ -220,6 +220,8 @@ def main(args):
     if args.siglip:
         model_kwargs['init_logit_scale'] = np.log(10)  # different from CLIP
         model_kwargs['init_logit_bias'] = -10
+    # todo: load dinov2 separately
+    # args.model
     model, preprocess_train, preprocess_val = create_model_and_transforms(
         args.model,
         args.pretrained,
