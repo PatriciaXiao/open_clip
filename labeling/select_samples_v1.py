@@ -51,8 +51,11 @@ def main():
     input_folder = "dental label"  # <- replace this with your path
     output_path = "selected_case_ids.json"
 
+    # n-samples: 100
+    total_cases = 600
+
     all_labels = load_json_labels(input_folder)
-    selected_ids = sample_cases(all_labels, total_cases=100, min_pos_per_file=10)
+    selected_ids = sample_cases(all_labels, total_cases=total_cases, min_pos_per_file=10)
 
     print(f"Selected {len(selected_ids)} cases satisfying all constraints.")
     with open(output_path, 'w') as f:

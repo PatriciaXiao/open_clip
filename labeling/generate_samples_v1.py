@@ -4,7 +4,7 @@ import csv
 selected_ids_path = 'selected_case_ids.json'
 # scp patxiao@kraken.cs.washington.edu:~/open_clip/mydataset/mydata.jsonl mydata.jsonl
 jsonl_path = 'mydata.jsonl'
-output_csv_path = 'selected_100_pano_v1.csv'
+output_csv_path = 'selected_500_pano_v1.csv'
 
 # Load selected case IDs
 with open(selected_ids_path, 'r') as f:
