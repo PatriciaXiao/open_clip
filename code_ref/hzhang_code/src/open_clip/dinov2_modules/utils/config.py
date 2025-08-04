@@ -80,8 +80,8 @@ def setup(args):
     Create configs and perform basic setups.
     """
     cfg = get_cfg_from_args(args)
-    print(cfg)
-    exit(0)
+    #print(cfg)
+    #exit(0)
     os.makedirs(args.output_dir, exist_ok=True)
     default_setup(args)
     apply_scaling_rules_to_cfg(cfg)
