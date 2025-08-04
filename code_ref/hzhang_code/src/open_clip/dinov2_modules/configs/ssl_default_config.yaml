@@ -69,7 +69,7 @@ train:
   centering: sinkhorn_knopp
 student:
   arch: vit_large
-  patch_size: 14
+  patch_size: 16
   drop_path_rate: 0.4
   layerscale: 1.0e-05
   drop_path_uniform: true
@@ -88,7 +88,7 @@ teacher:
   warmup_teacher_temp: 0.04
   teacher_temp: 0.07
   warmup_teacher_temp_epochs: 30
-  pretrained_weights: dinov2_vitl14
+  pretrained_weights: dinov2_vitl16
 optim:
   epochs: 500
   weight_decay: 0.04
