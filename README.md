@@ -145,6 +145,7 @@ pip install transformers
 
 
 pip install omegaconf
+pip install xformers
 ```
 
 ### Install
