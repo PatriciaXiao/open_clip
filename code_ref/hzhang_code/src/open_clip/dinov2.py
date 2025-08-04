@@ -17,6 +17,8 @@ def make_dinov2(dinov2_config, ckpt_path=''):
     dinov2_args = get_args_parser()
     # setup the config file
     this_file_dir = os.path.dirname(os.path.abspath(__file__))
+    print(dinov2_config)
+    exit(0)
     config_file = dinov2_config
     dinov2_args.opts = []
     dinov2_args.config_file = config_file
@@ -32,7 +34,7 @@ def make_dinov2(dinov2_config, ckpt_path=''):
 class DINOv2(nn.Module):
     def __init__(self,
                  config_path: str,
-                 image_size: int=196, #256,
+                 image_size: int=256,
                  pretrained: str=None,
                  embed_dim: int=768,
                  **kwargs):
