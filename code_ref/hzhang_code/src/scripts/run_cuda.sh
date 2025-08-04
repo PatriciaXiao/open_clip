@@ -18,5 +18,5 @@ python -m open_clip_train.main \
     --epochs=30 \
     --workers=8 \
     --model DINOv2_BiomedBERT \
-    --device cuda:0 \
+    --device cuda:3 \
     --max_patient_imgs_length 36
