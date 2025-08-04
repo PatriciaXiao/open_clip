@@ -26,8 +26,6 @@ def make_dinov2(dinov2_config, ckpt_path=''):
     dinov2_args.pretrained_weights = ckpt_path
     dinov2_args.skip_distributed = True
     # load the dinov2 model
-    print(dinov2_args)
-    exit(0)
     model, autocast_dtype = setup_and_build_model(dinov2_args)
 
     return model, autocast_dtype
