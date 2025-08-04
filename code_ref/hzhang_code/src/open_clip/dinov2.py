@@ -32,7 +32,7 @@ def make_dinov2(dinov2_config, ckpt_path=''):
 class DINOv2(nn.Module):
     def __init__(self,
                  config_path: str,
-                 image_size: int=256,
+                 image_size: int=196, #256,
                  pretrained: str=None,
                  embed_dim: int=768,
                  **kwargs):
