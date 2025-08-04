@@ -142,6 +142,9 @@ python -m pip install -r requirements-training.txt
 pip install img2dataset
 pip install pytest
 pip install transformers
+
+
+pip install omegaconf
 ```
 
 ### Install
