@@ -17,8 +17,8 @@ def make_dinov2(dinov2_config, ckpt_path=''):
     dinov2_args = get_args_parser()
     # setup the config file
     this_file_dir = os.path.dirname(os.path.abspath(__file__))
-    print(dinov2_config)
-    exit(0)
+    #print(dinov2_config)
+    #exit(0)
     config_file = dinov2_config
     dinov2_args.opts = []
     dinov2_args.config_file = config_file
@@ -26,6 +26,8 @@ def make_dinov2(dinov2_config, ckpt_path=''):
     dinov2_args.pretrained_weights = ckpt_path
     dinov2_args.skip_distributed = True
     # load the dinov2 model
+    print(dinov2_args)
+    exit(0)
     model, autocast_dtype = setup_and_build_model(dinov2_args)
 
     return model, autocast_dtype
