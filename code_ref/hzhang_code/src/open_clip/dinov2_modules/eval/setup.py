@@ -60,6 +60,7 @@ def get_autocast_dtype(config):
 
 
 def build_model_for_eval(config, pretrained_weights):
+    print(config)
     model, _ = build_model_from_cfg(config, only_teacher=True)
     #print(model)
     #print(config)
