@@ -1,5 +1,5 @@
 python -m open_clip_train.main \
-    --logs ./logs_debug \
+    --logs-dir /home/hzhanguw/research-projects/CLIPlogs \
     --wandb-project-name "DINOv2_CLIP" \
     --name "debug_test0"\
     --save-frequency 1 \
