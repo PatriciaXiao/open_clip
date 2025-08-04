@@ -1,6 +1,6 @@
 **/logs/
 **/wandb/
-models/
+#models/
 features/
 results/
 
