@@ -1,15 +1,14 @@
 python -m open_clip_train.main \
     --logs-dir /home/hzhanguw/research-projects/CLIPlogs \
     --wandb-project-name "DINOv2_CLIP" \
-    --name "epoch30_img36_lr2e-5_context256_BiomedBERT_test0"\
+    --name "debug_test0"\
     --save-frequency 1 \
     --accum-freq 24 \
     --log-every-n-steps 1 \
     --save-most-recent \
     --report-to wandb \
-    --dataset-type custom \
-    --train-data="/home/hzhanguw/research-projects/data/t1_train_data.json"  \
-    --val-data="/home/hzhanguw/research-projects/data/t1_val_data.json"  \
+    --dataset-type webdataset \
+    --train-data="/homes/gws/patxiao/open_clip/mydataset/sample_data/my_sample.tar"  \
     --csv-img-key file \
     --csv-caption-key text \
     --warmup 351 \
