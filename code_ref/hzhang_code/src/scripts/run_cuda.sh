@@ -1,6 +1,5 @@
 python -m open_clip_train.main \
     --logs-dir ./logs_debug \
-    --wandb-project-name "DINOv2_CLIP" \
     --name "debug_test0"\
     --save-frequency 1 \
     --accum-freq 24 \
