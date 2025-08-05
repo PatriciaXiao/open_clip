@@ -16,7 +16,7 @@ python -m open_clip_train.main \
     --lr=2e-5 \
     --wd=0.1 \
     --epochs=30 \
-    --workers=8 \
+    --workers=1 \
     --model DINOv2_BiomedBERT \
     --device cuda:3 \
     --train-num-samples 1000 \
