@@ -18,5 +18,5 @@ python -m open_clip_train.main \
     --workers=1 \
     --model DINOv2_BiomedBERT \
     --device cuda:3 \
-    --train-num-samples 1000 \
+    --train-num-samples 9584 \
     --max_patient_imgs_length 36
