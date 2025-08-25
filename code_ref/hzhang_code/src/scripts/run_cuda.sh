@@ -1,6 +1,6 @@
 python -m open_clip_train.main \
     --logs-dir ./logs_debug \
-    --name "debug_test0"\
+    --name "debug_test1"\
     --save-frequency 1 \
     --accum-freq 24 \
     --log-every-n-steps 1 \
