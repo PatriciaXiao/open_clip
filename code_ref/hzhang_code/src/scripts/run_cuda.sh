@@ -8,8 +8,7 @@ python -m open_clip_train.main \
     --report-to wandb \
     --dataset-type webdataset \
     --train-data="/homes/gws/patxiao/open_clip/mydataset/sample_data/my_sample.tar"  \
-    --csv-img-key file \
-    --csv-caption-key text \
+    --val-data="/homes/gws/patxiao/open_clip/mydataset/sample_data/my_sample.tar" \
     --warmup 351 \
     --batch-size=4 \
     --lr=2e-5 \
