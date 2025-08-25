@@ -74,6 +74,10 @@ class DINOv2(nn.Module):
     def forward(self, x):
 
         x, masks = x # x: [B, N, C, H, W], masks: [B, N]
+
+        print(x.shape)
+        print(masks.shape)
+
         assert len(x.shape) == 5
         B, N, C, H, W = x.shape
         
