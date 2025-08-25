@@ -75,8 +75,8 @@ class DINOv2(nn.Module):
 
         x, masks = x # x: [B, N, C, H, W], masks: [B, N]
 
-        print(x.shape)
-        print(masks.shape)
+        #print(x.shape) #torch.Size([3, 1024, 1024])
+        #print(masks.shape) #torch.Size([3, 1024, 1024])
 
         assert len(x.shape) == 5
         B, N, C, H, W = x.shape
