@@ -22,33 +22,6 @@ from .transformer import LayerNormFp32, LayerNorm, QuickGELU, Attention, VisionT
     text_global_pool
 from .utils import to_2tuple
 
-from dinov2.models import build_model_from_cfg
-from transformers import AutoTokenizer, AutoModel
-
-class DINOv2Wrapper(torch.nn.Module):
-    def __init__(self, ckpt_path):
-        super().__init__()
-        # build model with dinov2 repo’s factory function
-        self.model = build_model_from_cfg("dinov2_vitl16")  
-        state_dict = torch.load(ckpt_path, map_location="cpu")
-        self.model.load_state_dict(state_dict, strict=False)
-    
-    def forward(self, x):
-        feats = self.model(x)
-        # return CLS token / pooled features
-        return feats["x_norm_clstoken"] 
-
-class BiomedBERTWrapper(torch.nn.Module):
-    def __init__(self, model_name="microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract"):
-        super().__init__()
-        self.tokenizer = AutoTokenizer.from_pretrained(model_name)
-        self.model = AutoModel.from_pretrained(model_name)
-    
-    def forward(self, texts):
-        inputs = self.tokenizer(texts, padding=True, truncation=True, return_tensors="pt").to(self.model.device)
-        outputs = self.model(**inputs)
-        return outputs.last_hidden_state[:,0]  # CLS embedding
-
 
 @dataclass
 class CLIPVisionCfg:
@@ -173,30 +146,6 @@ def _build_vision_tower(
         if vision_cfg.act_kwargs is not None:
             act_layer = partial(act_layer, **vision_cfg.act_kwargs)
 
-
-        visual = DINOv2Wrapper(
-            image_size=vision_cfg.image_size,
-            patch_size=vision_cfg.patch_size,
-            width=vision_cfg.width,
-            layers=vision_cfg.layers,
-            heads=vision_heads,
-            mlp_ratio=vision_cfg.mlp_ratio,
-            ls_init_value=vision_cfg.ls_init_value,
-            patch_dropout=vision_cfg.patch_dropout,
-            attentional_pool=vision_cfg.attentional_pool,
-            attn_pooler_queries=vision_cfg.attn_pooler_queries,
-            attn_pooler_heads=vision_cfg.attn_pooler_heads,
-            pos_embed_type=vision_cfg.pos_embed_type,
-            no_ln_pre=vision_cfg.no_ln_pre,
-            final_ln_after_pool=vision_cfg.final_ln_after_pool,
-            pool_type=vision_cfg.pool_type,
-            output_tokens=vision_cfg.output_tokens,
-            output_dim=embed_dim,
-            act_layer=act_layer,
-            norm_layer=norm_layer,
-        )
-
-        """
         visual = VisionTransformer(
             image_size=vision_cfg.image_size,
             patch_size=vision_cfg.patch_size,
@@ -218,7 +167,6 @@ def _build_vision_tower(
             act_layer=act_layer,
             norm_layer=norm_layer,
         )
-        """
 
     return visual
 
@@ -249,27 +197,6 @@ def _build_text_tower(
         if text_cfg.act_kwargs is not None:
             act_layer = partial(act_layer, **text_cfg.act_kwargs)
 
-        text = BiomedBERTWrapper(
-            context_length=text_cfg.context_length,
-            vocab_size=text_cfg.vocab_size,
-            width=text_cfg.width,
-            heads=text_cfg.heads,
-            layers=text_cfg.layers,
-            mlp_ratio=text_cfg.mlp_ratio,
-            ls_init_value=text_cfg.ls_init_value,
-            output_dim=embed_dim,
-            embed_cls=text_cfg.embed_cls,
-            no_causal_mask=text_cfg.no_causal_mask,
-            pad_id=text_cfg.pad_id,
-            pool_type=text_cfg.pool_type,
-            proj_type=text_cfg.proj_type,
-            proj_bias=text_cfg.proj_bias,
-            output_tokens=text_cfg.output_tokens,
-            act_layer=act_layer,
-            norm_layer=norm_layer,
-        )
-
-        """
         text = TextTransformer(
             context_length=text_cfg.context_length,
             vocab_size=text_cfg.vocab_size,
@@ -289,8 +216,6 @@ def _build_text_tower(
             act_layer=act_layer,
             norm_layer=norm_layer,
         )
-        """
-
     return text
 
 
