@@ -53,6 +53,7 @@ def _rescan_model_configs():
 _rescan_model_configs()  # initial populate of model config registry
 
 print(_MODEL_CONFIGS)
+exit(0)
 
 
 def list_models():
