@@ -52,6 +52,8 @@ def _rescan_model_configs():
 
 _rescan_model_configs()  # initial populate of model config registry
 
+print(_MODEL_CONFIGS)
+
 
 def list_models():
     """ enumerate available model architectures based on config files """
