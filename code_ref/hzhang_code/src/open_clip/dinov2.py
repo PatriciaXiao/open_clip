@@ -8,12 +8,15 @@ import torch.nn.functional as F
 from torch import nn
 from torchvision import transforms
 
+from dinov2_modules.eval.setup import setup_and_build_model, get_args_parser
+# dinov2_modules plays the consist of just a dinov2 model, just like: https://github.com/facebookresearch/dinov2/tree/main/dinov2
+
 
 def make_dinov2(dinov2_config, ckpt_path=''):
     ### build the dinov2 model ###
     this_file_dir = os.path.dirname(os.path.abspath(__file__))
     sys.path.append(os.path.join(this_file_dir))
-    from dinov2_modules.eval.setup import setup_and_build_model, get_args_parser
+    #from dinov2_modules.eval.setup import setup_and_build_model, get_args_parser
     dinov2_args = get_args_parser()
     # setup the config file
     this_file_dir = os.path.dirname(os.path.abspath(__file__))
