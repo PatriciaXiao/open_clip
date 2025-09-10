@@ -148,6 +148,16 @@ pip install omegaconf
 pip install xformers
 ```
 
+Data path:
+```shell
+/m-chimera/chimera/nobackup/jwyang/dataset/dental/intersection # chimera only
+/m-chimera/chimera/nobackup/PanosBasicInfo # chimera
+
+/projects/chimera/nobackup/wliu25/ckpts/pretrain/ckpt_lshort_bs128/eval/ # kraken only
+/homes/gws/wliu25/dinov2 # kraken only
+/data/PanosBasicInfo #kraken
+```
+
 ### Install
 
 We advise you first create a virtual environment with:
