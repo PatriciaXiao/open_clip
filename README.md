@@ -152,10 +152,17 @@ Data path:
 ```shell
 /m-chimera/chimera/nobackup/jwyang/dataset/dental/intersection # chimera only
 /m-chimera/chimera/nobackup/PanosBasicInfo # chimera
+/m-chimera/chimera/nobackup/PanosDeidentified
+/m-chimera/chimera/nobackup/PanosText
+# 49693
 
 /projects/chimera/nobackup/wliu25/ckpts/pretrain/ckpt_lshort_bs128/eval/ # kraken only
 /homes/gws/wliu25/dinov2 # kraken only
 /data/PanosBasicInfo #kraken
+/data/PanosDeidentified
+
+# ads-vs18
+/home/patxiao/Dental
 ```
 
 ### Install
