@@ -27,6 +27,7 @@ tensor_np = tensor.cpu().numpy()
 for i in range(tensor_np.shape[0]):
     img = tensor_np[i]  # shape [3, 224, 224]
     img = img.transpose(1, 2, 0)  # to [224, 224, 3] for matplotlib
+    img = (img - img.min()) / (img.max() - img.min())
 
     plt.imshow(img)
     plt.title(f"Slice {i+1}/{tensor_np.shape[0]}")
