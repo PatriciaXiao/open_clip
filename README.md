@@ -163,6 +163,28 @@ Data path:
 
 # ads-vs18
 /home/patxiao/Dental
+
+# label
+/projects/krakennb/patxiao/
+
+# example data
+#kraken
+#/projects/chimera/nobackup/ImageNet
+
+# jupyter notebook --no-browser --ip=0.0.0.0 --port=8888
+# http://localhost:8888/tree?token=fedef8e7ebc8232509ef6070a9c18c97cabc3dd9bf88f603
+# http://10.158.136.94/
+```
+
+
+
+?
+```python
+from dinov2.data.datasets import ImageNet
+
+for split in ImageNet.Split:
+    dataset = ImageNet(split=split, root="<ROOT>", extra="<EXTRA>")
+    dataset.dump_extra()
 ```
 
 ### Install
